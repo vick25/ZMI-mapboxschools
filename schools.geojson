@@ -1,0 +1,365 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-ide",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2018-09-02T05:48:02Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/31571555",
+        "amenity": "school",
+        "created_by": "JOSM",
+        "name": "Skuli ya Bububu Sekondari"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2178928,
+          -6.1056925
+        ]
+      },
+      "id": "node/31571555"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/31571657",
+        "amenity": "school",
+        "created_by": "JOSM",
+        "name": "Skuli ya Msinga Nakati"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.222464,
+          -6.1796584
+        ]
+      },
+      "id": "node/31571657"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/569490486",
+        "amenity": "school",
+        "name": "British School"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.1994378,
+          -6.174168
+        ]
+      },
+      "id": "node/569490486"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2712494549",
+        "amenity": "school",
+        "name": "International School of Zanzibar",
+        "website": "http://isz.co.tz/",
+        "wikidata": "Q6053051",
+        "wikipedia": "en:International School of Zanzibar"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2082223,
+          -6.2028207
+        ]
+      },
+      "id": "node/2712494549"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3586074846",
+        "addr:city": "Stone Town",
+        "addr:postcode": "71101",
+        "amenity": "school",
+        "building": "school",
+        "name": "Benbella High School"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.1918668,
+          -6.1663265
+        ]
+      },
+      "id": "node/3586074846"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3609381319",
+        "amenity": "school",
+        "name": "Skuli yamaand MS Dole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2520669,
+          -6.1044557
+        ]
+      },
+      "id": "node/3609381319"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3609646082",
+        "amenity": "school",
+        "name": "Mwera School"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2719371,
+          -6.1440609
+        ]
+      },
+      "id": "node/3609646082"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3609646083",
+        "amenity": "school",
+        "name": "Mwera Super School"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2544299,
+          -6.1468377
+        ]
+      },
+      "id": "node/3609646083"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3609647805",
+        "amenity": "school",
+        "name": "Skuli ya Dunga"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.3207022,
+          -6.1342423
+        ]
+      },
+      "id": "node/3609647805"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3609787134",
+        "amenity": "school"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2600214,
+          -6.1477468
+        ]
+      },
+      "id": "node/3609787134"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3609787172",
+        "amenity": "school",
+        "name": "Skuli ya Tunguu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.327037,
+          -6.1857299
+        ]
+      },
+      "id": "node/3609787172"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3610700449",
+        "amenity": "school",
+        "name": "Fountain Academy Zanzibar"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2775919,
+          -6.1961107
+        ]
+      },
+      "id": "node/3610700449"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3610738461",
+        "amenity": "school"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2649731,
+          -6.1970596
+        ]
+      },
+      "id": "node/3610738461"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3612795751",
+        "amenity": "school"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.1929463,
+          -6.1638457
+        ]
+      },
+      "id": "node/3612795751"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3613444667",
+        "amenity": "school",
+        "name": "Sunni Madressa School"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.1909169,
+          -6.1632882
+        ]
+      },
+      "id": "node/3613444667"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3842181017",
+        "amenity": "school"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.1971778,
+          -6.1669603
+        ]
+      },
+      "id": "node/3842181017"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4236416289",
+        "amenity": "school",
+        "name": "BRITISH SCHOOL OF ZANZIBAR"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2338097,
+          -6.2222083
+        ]
+      },
+      "id": "node/4236416289"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4271794450",
+        "amenity": "school",
+        "name": "Skuli ya Sekondari ya Tumekuja"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.1876275,
+          -6.1653485
+        ]
+      },
+      "id": "node/4271794450"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4485306789",
+        "amenity": "school"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.1870524,
+          -6.1638107
+        ]
+      },
+      "id": "node/4485306789"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4486489093",
+        "amenity": "school"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.1904591,
+          -6.1625454
+        ]
+      },
+      "id": "node/4486489093"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4488432689",
+        "amenity": "school",
+        "name": "Sun City School",
+        "name:en": "Sun City School"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.1922289,
+          -6.161625
+        ]
+      },
+      "id": "node/4488432689"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5623141145",
+        "addr:city": "Zanzibar",
+        "addr:country": "TZ",
+        "amenity": "school",
+        "name": "Chukwani School"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2198763,
+          -6.2352508
+        ]
+      },
+      "id": "node/5623141145"
+    }
+  ]
+}
