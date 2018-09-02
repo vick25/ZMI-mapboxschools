@@ -10,43 +10,73 @@
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; z-index:-1; }
+        .legend {
+              background-color: #fff;
+              border-radius: 3px;
+              bottom: 30px;
+              box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+              font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+              padding: 10px;
+              position: absolute;
+              right: 10px;
+              z-index: 1;
+          }
 
-        .legend label,
-        .legend span {
-          display:block;
-          float:left;
-          height:15px;
-          width:20%;
-          text-align:center;
-          font-size:9px;
-          color:#808080;
+          .legend h4 {
+              margin: 0 0 10px;
+          }
+
+          .legend div span {
+              border-radius: 50%;
+              display: inline-block;
+              height: 10px;
+              margin-right: 5px;
+              width: 10px;
+          }
+
+        .mapboxgl-popup-content {
+          padding: 0;
+          width: 280px;
+          font: 400 12px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+        }
+
+        .mapboxgl-popup-content-wrapper {
+          padding: 1%;
         }
     </style>
 </head>
 <body>
-<!-- Set the display of this container to none so we can
-   add it programmatically to `legendControl` -->
-   <div id='legend' style='display:none;'>
-      <strong>The Title or Explanation of your Map</strong>
-      <nav class='legend clearfix'>
-        <span style='background:#F1EEF6;'></span>
-        <span style='background:#BDC9E1;'></span>
-        <span style='background:#74A9CF;'></span>
-        <span style='background:#2B8CBE;'></span>
-        <span style='background:#045A8D;'></span>
-        <label>0 - 20%</label>
-        <label>40%</label>
-        <label>60%</label>
-        <label>80%</label>
-        <label>100%</label>
-        <small>Source: <a href="#link to source">Name of source</a></small>
-    </div>
 
     <div id='map'></div>
 
+<!-- Set the display of this container to none so we can
+   add it programmatically to `legendControl` -->
+   <div id='pop-legend' class="legend">
+      <strong>School population density</strong>
+      <!-- <nav class='legend clearfix'> -->
+      <div><span style='background-color: #723122'></span>25,000,000</div>
+      <div><span style='background-color: #8B4225'></span>10,000,000</div>
+      <div><span style='background-color: #A25626'></span>7,500,000</div>
+      <div><span style='background-color: #B86B25'></span>5,000,000</div>
+      <div><span style='background-color: #CA8323'></span>2,500,000</div>
+      <div><span style='background-color: #DA9C20'></span>1,000,000</div>
+      <div><span style='background-color: #E6B71E'></span>750,000</div>
+      <div><span style='background-color: #EED322'></span>500,000</div>
+      <div><span style='background-color: #F2F12D'></span>0</div>
+        <small>Source: <a href="#link to source">GeoJson</a></small>
+    </div>
 
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoidmljazI1IiwiYSI6ImNqa3d6NWpxczAzN2IzcHF4eHlwZzNmcjYifQ.XNOgFms-v3P60RerHVIeUQ';
+
+        var stateLegendEl = document.getElementById('pop-legend');
+
+        // Create a popup, but don't add it to the map yet.
+        var popup = new mapboxgl.Popup({
+            closeButton: true,
+            closeOnClick: false,
+            offset: [0, -15]
+        });
 
         // Set bounds to Zanzibar
         var bounds = [
@@ -54,82 +84,176 @@
             [39.43817138671875,-5.9029208208054245]  // Northeast coordinates
         ];
 
+        //Define the map object variable
         var map = new mapboxgl.Map({
             container: 'map', // container id
             style: 'mapbox://styles/vick25/cjlj8qj4u2a7h2rmoj9viljm5', // stylesheet location
             center: [39.20557022094726, -6.165302294288643], // starting position [lng, lat]
-            zoom: 15, // starting zoom
+            zoom: 9, // starting zoom
             // maxBounds: bounds // Sets bounds as max
         });
         //Default cursor
-        map.getCanvas().style.cursor = 'default';
-
+        map.getCanvas().style.cursor = 'hand';
         // Add zoom and rotation controls to the map.
-        map.addControl(new mapboxgl.NavigationControl());
-
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         // map.legendControl.addLegend(document.getElementById('legend').innerHTML);
 
-        map.on('style.load', function() {
-            // Add a new source from our GeoJSON data and set the
-            // 'cluster' option to true. GL-JS will add the point_count property to your source data.
-            map.addSource("schools", {
-                type: "geojson",
-                // Point to GeoJSON data.
-                data: "https://raw.githubusercontent.com/vick25/ZMI-mapboxschools/master/Zanz-schools.geojson",
-                cluster: true,
-                clusterMaxZoom: 10, // Max zoom to cluster points on
-                clusterRadius: 30 // Radius of each cluster when clustering points (defaults to 50)
-            });
+        function togglePopup() {
+            var popup = this._popup;
 
-            map.addLayer({
-                id: "clusters",
-                type: "circle",
-                source: "schools",
-                filter: ["has", "point_count"],
-                paint: {
-                    // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-                    // with three steps to implement three types of circles:
-                    //   * Blue, 20px circles when point count is less than 10
-                    //   * Yellow, 30px circles when point count is between 10 and 25
-                    //   * Green (00BE28), 40px circles when point count is greater than or equal to 25
-                    "circle-color": [
-                        "step",
-                        ["get", "point_count"],
-                        "#51bbd6",
-                        10,
-                        "#f1f075",
-                        25,
-                        "#00BE28"
-                    ],
-                    "circle-radius": [
-                        "step",
-                        ["get", "point_count"],
-                        20,
-                        10,
-                        30,
-                        25,
-                        40
-                    ]
+            if (!popup) return;
+            else if (popup.isOpen()) popup.remove();
+            else popup.addTo(this._map);
+        }
+
+        map.on('load', function() {  
+              //1st source
+              // map.addSource("sch", {
+              //     type: "geojson",
+              //     data: "https://raw.githubusercontent.com/vick25/ZMI-mapboxschools/master/schools.geojson",
+              //     cluster: true,
+              //     clusterMaxZoom: 12, // Max zoom to cluster points on
+              //     clusterRadius: 30 // Radius of each cluster when clustering points (defaults to 50)
+              // });
+
+              //Second source
+              map.addSource("sch_full", {
+                  type: "geojson",
+                  data: "https://raw.githubusercontent.com/vick25/ZMI-mapboxschools/master/zanzibar_school_full.geojson",
+                  cluster: true,
+                  clusterMaxZoom: 14, // Max zoom to cluster points on
+                  clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+              });
+
+              map.addLayer({
+                  id: "sch_cluster_layer",
+                  type: "circle",
+                  source: "sch_full",
+                  filter: ["has", "point_count"],
+                  paint: {
+                      // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+                      // with three steps to implement three types of circles:
+                      //   * Blue, 20px circles when point count is less than 10
+                      //   * Yellow, 30px circles when point count is between 10 and 25
+                      //   * Green (00BE28), 40px circles when point count is greater than or equal to 25
+                      "circle-color": [
+                          "step",
+                          ["get", "point_count"],
+                          "#51bbd6",
+                          10,
+                          "#f1f075",
+                          25,
+                          "#00BE28"
+                      ],
+                      "circle-radius": [
+                          "step",
+                          ["get", "point_count"],
+                          20,
+                          10,
+                          30,
+                          25,
+                          40
+                      ]
+                  }
+              });
+
+              map.addLayer({
+                  id: "cluster-count",
+                  type: "symbol",
+                  source: "sch_full",
+                  filter: ["has", "point_count"],
+                  layout: {
+                      "text-field": "{point_count_abbreviated}",
+                      "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                      "text-size": 12
+                  }
+              });
+
+              map.addLayer({
+                  id: "unclustered-point",
+                  type: "circle",
+                  source: "sch_full",
+                  filter: ["!", ["has", "point_count"]],
+                  paint: {
+                      "circle-color": "#000",
+                      "circle-radius": 4,
+                      "circle-stroke-width": 1,
+                      "circle-stroke-color": "#fff"
+                  }
+              });
+
+              // inspect a cluster on click
+              map.on('click', 'sch_cluster_layer', function (e) {
+                  var features = map.queryRenderedFeatures(e.point, { layers: ['sch_cluster_layer'] });
+                  var clusterId = features[0].properties.cluster_id;
+                  map.getSource('sch_full').getClusterExpansionZoom(clusterId, function (err, zoom) {
+                      if (err)
+                          return;
+
+                      map.easeTo({
+                          center: features[0].geometry.coordinates,
+                          zoom: zoom
+                      });
+                  });
+              });
+
+              map.on('mouseenter', 'sch_cluster_layer', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+              });
+              map.on('mouseleave', 'sch_cluster_layer', function () {
+                  map.getCanvas().style.cursor = '';
+              });
+
+              // Change the cursor to a pointer when the mouse is over the pitches layer.
+              map.on('mouseenter', 'unclustered-point', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+              });
+
+              // Change it back to a pointer when it leaves.
+              map.on('mouseleave', 'unclustered-point', function () {
+                  map.getCanvas().style.cursor = '';
+              });
+
+              map.on('click', function (e){                
+                if (popup.isOpen()) popup.remove();
+              })
+
+              // Add popups
+              map.on('click', 'unclustered-point',  function(e) {                
+                // console.log(e);
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var mySchools_features = map.queryRenderedFeatures(e.point, { layers: ["unclustered-point"] // name of the layer
+                });
+
+                // console.log(mySchools_features.length);
+
+                if (!mySchools_features.length) {
+                  return;
                 }
-            });
-            
-                map.on('click', function(e) {
-      var features = map.queryRenderedFeatures(e.point, {
-        layers: ['layer-name-here'] // replace this with the name of the layer
-      });
-    
-      if (!features.length) {
-        return;
-      }
-    
-      var feature = features[0];
-    
-      var popup = new mapboxgl.Popup({ offset: [0, -15] })
-        .setLngLat(feature.geometry.coordinates)
-        .setHTML('<h3>' + feature.properties.title + '</h3><p>' + feature.properties.description + '</p>')
-        .setLngLat(feature.geometry.coordinates)
-        .addTo(map);
-    });
+
+                var school = mySchools_features[0];
+
+                var school_level = ['School Level'];
+
+                // console.log(school.properties['School Level']);
+
+                popup.setLngLat(school.geometry.coordinates)
+                .setHTML(
+                 '<span><strong>School Name: </strong>'+ school.properties['School Name'] +'</span><br/>' +
+                  '<span><strong>District: </strong>' + school.properties.District +'</span><br/>' +
+                  '<span><strong>Coordinates: </strong>' +school.properties.GPS_Latitude + ','+ school.properties.GPS_Longitude + '</span><br/>'+
+                  '<span><strong>Electricity: </strong>' + school.properties.Electricity +'</span><br/>' +
+                 '<span><strong>Computers: </strong>'+ school.properties.Computers+'</span><br/>'+
+                  '<span><strong>EMIS ID: </strong>' +school.properties['EMIS ID'] +'</span><br/>'+
+                 '<span><strong>Pre-primary: </strong>'+ school.properties['Pre-Primary'] +'</span><br/>' +
+                 '<span><strong>Primary: </strong>'+ school.properties.Primary +'</span><br/>'+ 
+                 '<strong>School Level: </strong>'+ school.properties['School Level'] +'</span><br/>'+ 
+                  '<span><strong>Secondary: </strong>'+ school.properties.Secondary +'</span><br/>'+
+                  '<span><strong>Total: </strong>'+ school.properties.Total +'</span><br/>' +
+                 '<span><strong>Water: </strong>'+ school.properties.Water +'</span><br/>')
+                .addTo(map);
+              });
+
         });
 </script>
 
